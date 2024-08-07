@@ -24,24 +24,37 @@ ansible --version
 # 생각해보기
 - dockerhub container 의 image 를 사용해서 terraform 과 ansible 환경구성을 하는 건 어떨까, 또는 맞춤형 도커이미지를 만드는 건 어떨까 ?
 ```
-- 업데이트 운영 관점에서의 평가
-terraform container 는 hashcorp 가 공식적으로 올려주나, 
-ansible container 는 https://github.com/ansible/ansible 에 소개되지 않은 기업이 publisher임.
-유지보수 측면에서 공식스폰서인 redhat 과 독립적으로 container 의 업데이트가 진행중. 공식적인 책임관리라고 보기 힘듦.
+- 업데이트와 운영 관점에서의 평가
+terraform container 는 기술보유 회사인 hashicorp 가 dockerhub에 공식적으로 올려주나, 
+ansible container 는 https://github.com/ansible/ansible 에 소개되지 않은 기업(rapidfort)이 publisher임.
+
+유지보수 측면에서 공식스폰서인 redhat 과 독립적으로 dockerhub container 의 업데이트가 진행중이고,
+이들의 readme 에서 dockerhub 이 아닌 다른 사이트를 권고함. 사이트 검증에 대한 추가시간이 요구됨.
+무엇보다 이들의 readme에 따라 실행해봤지만 error 가 발생함,  공식적인 책임관리라고 보기 힘듦.
 
 또한, 적용되는 환경에 docker engine 이 전제되야하고, container 의 '격리된 환경' 특성 상, 
 iac script 실행을 위해 host 에 대한 볼륨 마운트 또는 docker cp 등 추가적인 절차와 명령어가 필요함.
+이와 같은 추가작업이 필요하고, 보안이 엄격한 운영환경에서 이런 추가작업은 데드라인을 예상외로 넘기게함.
 
-이는 큰 진입장벽은 아니고, 결국 의존성의 악순환과 기술부채로 운영이 정지된다고 생각한다면, 
+하지만, 결국 의존성의 악순환과 기술부채로 운영이 정지된다고 생각한다면, 
 iac 도 container로 하는 것이 장기적으론 바람직하나, 레거시 상황상 가이드의 우선순위는 아니라고 볼 수 있음.
 
 - 디스크와 데이터 운영 관점에서 평가
 aws 클라우드벤더 사의 cli container까지 다운로드받는다고 가정할 때, 
 aws cli container, ansible container, terraform container 를 모두 다운로드 하면 컨테이너 총 용량이 약 1G 정도 됨.
-터미널 상으로 개별 다운로드 받는 것이 많아야 몇백메가라면, 컨테이너단위는 최소 몇백메가 단위로 증가하여 데이터를 조금 더 소모할 수도 있어보임.
+터미널 상으로 개별 다운로드 받는 것이 많아야 몇백메가라면, 
+컨테이너단위는 최소 몇백메가 단위로 증가하여 데이터를 조금 더 소모할 수도 있어보임.
 
-이는 , aws free tier 로 운영할 것 아닌 이상, TB단위 데이터 운영관점에서는 충분히 기존 운영사이클 내에서 제어가능할 것으로 예상. 
-또한 쉽게 지우고 다시 pull 받는 환경이라면 영향도는 없는 걸로 분류가능
-결과적으로, dockerfile 연습 겸 iac-awscli image 도 사용예정
+이는 , aws free tier 로 운영할 것 아닌 이상, 
+TB단위 데이터 운영관점에서는 충분히 기존 운영사이클 내에서 제어가능할 것으로 예상. 
+
+- 경험과 훈련 관점에서의 평가
+상식적으로 공식 publisher 가 올리는 container 는 정상상태여야 하나, 
+현실은 다르다는 걸 배우는 과정이라면 의미가 있음.
+인터넷이 접근되어 쉽게 지우고 다시 pull 받는 환경이라면, 경험한 문제를 해결도 가능함.
+가령, ansible dockerfile 을 작성해서 dockerhub 에 push pull 해볼 수 있음.
+이런 경험을 바탕으로 awscli container 를 base image 로 iac-awscli container 를 해볼 수 있음.
+
+결과적으로, 나는 경험과 훈련과정에 의미를 두기로함. 하기 싫지만, 나의 성장에 올바른 선택으로 판단.
 ```
 [gotoTHINKME](./THINKME.md)
