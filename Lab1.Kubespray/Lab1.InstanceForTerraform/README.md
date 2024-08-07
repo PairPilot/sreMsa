@@ -44,4 +44,4 @@ aws cli container, ansible container, terraform container 를 모두 다운로�
 또한 쉽게 지우고 다시 pull 받는 환경이라면 영향도는 없는 걸로 분류가능
 결과적으로, dockerfile 연습 겸 iac-awscli image 도 사용예정
 ```
-[gotoTHINKME](../THANKME.md)
+[gotoTHINKME](./THANKME.md)
