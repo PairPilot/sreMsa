@@ -25,8 +25,9 @@ ansible --version
 - dockerhub container 의 image 를 사용해서 terraform 과 ansible 환경구성을 하는 건 어떨까, 또는 맞춤형 도커이미지를 만드는 건 어떨까 ?
 ```
 - 업데이트 운영 관점에서의 평가
-terraform container 는 hashcorp 가 공식적으로 올려주나, ansible container 는 오픈소스 컨테이너만 있음. 
-유지보수 측면에서 ansible container 는 일정한 container 업데이트를 기대할 수 없음.
+terraform container 는 hashcorp 가 공식적으로 올려주나, 
+ansible container 는 https://github.com/ansible/ansible 에 소개되지 않은 기업이 publisher임.
+유지보수 측면에서 공식스폰서인 redhat 과 독립적으로 container 의 업데이트가 진행중. 공식적인 책임관리라고 보기 힘듦.
 
 또한, 적용되는 환경에 docker engine 이 전제되야하고, container 의 '격리된 환경' 특성 상, 
 iac script 실행을 위해 host 에 대한 볼륨 마운트 또는 docker cp 등 추가적인 절차와 명령어가 필요함.
@@ -41,5 +42,6 @@ aws cli container, ansible container, terraform container 를 모두 다운로�
 
 이는 , aws free tier 로 운영할 것 아닌 이상, TB단위 데이터 운영관점에서는 충분히 기존 운영사이클 내에서 제어가능할 것으로 예상. 
 또한 쉽게 지우고 다시 pull 받는 환경이라면 영향도는 없는 걸로 분류가능
-결과적으로, dockerfile 연습 겸 iac-awscli image 를 사용예정
+결과적으로, dockerfile 연습 겸 iac-awscli image 도 사용예정
 ```
+[gotoTHINKME](../THANKME.md)
